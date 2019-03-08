@@ -43,7 +43,7 @@ void getCompanies(vector<Person> &employees, vector<string> &companyNames)
 		{
 			if (employees[i].getCompanyName() == companyNames.at(j))
 				break;
-			else if(j == companyNames.size())
+			else if (j == companyNames.size() - 1)
 				companyNames.push_back(employees[i].getCompanyName());
 		}
 	}
@@ -51,12 +51,38 @@ void getCompanies(vector<Person> &employees, vector<string> &companyNames)
 
 void printHighestPaid(vector<Person> &employees)
 {
-
+	int i = 0, highIndex = 0;
+	for (i = 0; i < employees.size(); i++)
+	{
+		if (employees[i].totalPay() > employees[highIndex].totalPay())
+			highIndex = i;
+	}
+	cout << "Highest Paid: " << employees[highIndex].fullName() << endl;
+	cout << "Employee ID: " << employees[highIndex].getEmployeeId() << endl;
+	cout << "Employer: " << employees[highIndex].getCompanyName() << endl;
+	cout << "Total Pay: $" << employees[highIndex].totalPay() << endl;
 }
 
-void separateAndSave(vector<Person> &employees, vector<string> companyNames)
+void separateAndSave(vector<Person> &employees, vector<string> &companyNames)
 {
-
+	ofstream dataFile;
+	int i, j;
+	float companyTotal = 0;
+	for (i = 0; i < companyNames.size(); i++)
+	{
+		dataFile.open(companyNames[i] + ".txt");
+		for (j = 0; j < employees.size(); j++)
+		{
+			if (employees[j].getCompanyName() == companyNames[i])
+			{
+				dataFile << employees[j].fullName() << " " << employees[j].getEmployeeId() << " " << employees[j].getCompanyName() << " " << employees[j].totalPay() << endl;
+				companyTotal = companyTotal + employees[j].totalPay();
+			}
+		}
+		dataFile << "Total: " << companyTotal;
+		companyTotal = 0;
+		dataFile.close();
+	}
 }
 
 int main()
@@ -65,19 +91,6 @@ int main()
 	vector<string> companyNames;
 	readData(employees);
 	getCompanies(employees, companyNames);
-	int i = 0, j = 0;
-	for (i = 0; i < employees.size(); i++)
-	{
-		cout << employees[i].getFirstName() << endl;
-		cout << employees[i].getLastName() << endl;
-		cout << employees[i].getEmployeeId() << endl;
-		cout << employees[i].getCompanyName() << endl;
-		cout << employees[i].getHoursWorked() << endl;
-		cout << employees[i].getPayRate() << endl << endl;
-	}
-	for (j = 0; j < companyNames.size(); j++)
-	{
-		cout << companyNames[j] << endl;
-	}
-	system("pause");
+	printHighestPaid(employees);
+	separateAndSave(employees, companyNames);
 }
