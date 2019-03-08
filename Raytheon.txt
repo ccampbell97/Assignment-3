@@ -1,0 +1,6 @@
+Matthew Davenport 40 Raytheon 2999.63
+Amber Daniels 60 Raytheon 2770.13
+James Miller 100 Raytheon 2539.13
+Thomas Sanders 130 Raytheon 1934.63
+Sophia Foster 140 Raytheon 1942.6
+Total: 12186.1
