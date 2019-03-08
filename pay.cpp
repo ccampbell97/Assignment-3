@@ -2,6 +2,7 @@
 #include"person.h"
 #include<vector>
 #include<fstream>
+#include<iomanip>
 
 using namespace std;
 
@@ -75,7 +76,9 @@ void separateAndSave(vector<Person> &employees, vector<string> &companyNames)
 		{
 			if (employees[j].getCompanyName() == companyNames[i])
 			{
-				dataFile << employees[j].fullName() << " " << employees[j].getEmployeeId() << " " << employees[j].getCompanyName() << " " << employees[j].totalPay() << endl;
+				dataFile << left << setw(17) << employees[j].fullName() << " " << setw(3) << employees[j].getEmployeeId() << " " << employees[j].getCompanyName() << " ";
+				dataFile.precision(2);
+				dataFile << employees[j].totalPay() << endl;
 				companyTotal = companyTotal + employees[j].totalPay();
 			}
 		}
